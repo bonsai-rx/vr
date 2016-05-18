@@ -74,11 +74,16 @@
     </Compile>
     <Compile Include="CreateInstancedMesh.cs" />
     <Compile Include="DataHelper.cs" />
+    <Compile Include="DevicePose.cs" />
+    <Compile Include="GetDevicePoses.cs" />
     <Compile Include="GetEyeTransformations.cs" />
+    <Compile Include="GetHmdState.cs" />
+    <Compile Include="HmdState.cs" />
     <Compile Include="ObjReader.cs" />
     <Compile Include="ObservableCombinators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubmitTextures.cs" />
+    <Compile Include="VRDataFrame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bonsai.VR.nuspec" />
