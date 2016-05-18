@@ -61,50 +61,6 @@ namespace Bonsai.VR
             return hmd;
         }
 
-        static void ToMatrix4(ref HmdMatrix44_t matrix, out Matrix4 result)
-        {
-            result = new Matrix4(
-                matrix.m0,
-                matrix.m1,
-                matrix.m2,
-                matrix.m3,
-                matrix.m4,
-                matrix.m5,
-                matrix.m6,
-                matrix.m7,
-                matrix.m8,
-                matrix.m9,
-                matrix.m10,
-                matrix.m11,
-                matrix.m12,
-                matrix.m13,
-                matrix.m14,
-                matrix.m15
-            );
-        }
-
-        static void ToMatrix4(ref HmdMatrix34_t matrix, out Matrix4 result)
-        {
-            result = new Matrix4(
-                matrix.m0,
-                matrix.m1,
-                matrix.m2,
-                matrix.m3,
-                matrix.m4,
-                matrix.m5,
-                matrix.m6,
-                matrix.m7,
-                matrix.m8,
-                matrix.m9,
-                matrix.m10,
-                matrix.m11,
-                0,
-                0,
-                0,
-                1
-            );
-        }
-
         static void GetEyePoses(
             CVRSystem hmd,
             TrackedDevicePose_t[] trackedDevicePose,
@@ -121,18 +77,15 @@ namespace Bonsai.VR
             var ltMatrix = hmd.GetEyeToHeadTransform(EVREye.Eye_Left);
             var rtMatrix = hmd.GetEyeToHeadTransform(EVREye.Eye_Right);
 
-            ToMatrix4(ref head, out headPose);
-            ToMatrix4(ref ltMatrix, out ltEyeToHead);
-            ToMatrix4(ref rtMatrix, out rtEyeToHead);
-            headPose.Transpose();
-            ltEyeToHead.Transpose();
-            rtEyeToHead.Transpose();
+            DataHelper.ToMatrix4(ref head, out headPose);
+            DataHelper.ToMatrix4(ref ltMatrix, out ltEyeToHead);
+            DataHelper.ToMatrix4(ref rtMatrix, out rtEyeToHead);
 
             var ltProj = hmd.GetProjectionMatrix(EVREye.Eye_Left, nearPlaneZ, farPlaneZ, EGraphicsAPIConvention.API_OpenGL);
             var rtProj = hmd.GetProjectionMatrix(EVREye.Eye_Right, nearPlaneZ, farPlaneZ, EGraphicsAPIConvention.API_OpenGL);
 
-            ToMatrix4(ref ltProj, out ltProjectionMatrix);
-            ToMatrix4(ref rtProj, out rtProjectionMatrix);
+            DataHelper.ToMatrix4(ref ltProj, out ltProjectionMatrix);
+            DataHelper.ToMatrix4(ref rtProj, out rtProjectionMatrix);
         }
 
         public override IObservable<Tuple<Matrix4, Matrix4, Matrix4, Matrix4>> Process<TSource>(IObservable<TSource> source)
@@ -150,11 +103,7 @@ namespace Bonsai.VR
 
                     var leftView = (ltEyeToHead * headPose).Inverted();
                     var rightView = (rtEyeToHead * headPose).Inverted();
-                    var leftProjection = ltProjectionMatrix;
-                    var rightProjection = rtProjectionMatrix;
-                    leftProjection.Transpose();
-                    rightProjection.Transpose();
-                    return Tuple.Create(leftView, leftProjection, rightView, rightProjection);
+                    return Tuple.Create(leftView, ltProjectionMatrix, rightView, rtProjectionMatrix);
                 }).Finally(() =>
                 {
                     OpenVR.Shutdown();
