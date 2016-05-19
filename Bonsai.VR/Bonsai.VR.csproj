@@ -72,6 +72,7 @@
     <Compile Include="..\openvr\headers\openvr_api.cs">
       <Link>openvr_api.cs</Link>
     </Compile>
+    <Compile Include="BindFramebuffer.cs" />
     <Compile Include="CreateInstancedMesh.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DevicePose.cs" />
