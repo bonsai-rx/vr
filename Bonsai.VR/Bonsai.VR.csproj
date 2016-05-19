@@ -73,9 +73,11 @@
       <Link>openvr_api.cs</Link>
     </Compile>
     <Compile Include="BindFramebuffer.cs" />
+    <Compile Include="ControllerState.cs" />
     <Compile Include="CreateInstancedMesh.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DevicePose.cs" />
+    <Compile Include="GetControllerState.cs" />
     <Compile Include="GetDevicePoses.cs" />
     <Compile Include="GetEyeTransformations.cs" />
     <Compile Include="GetHmdState.cs" />
