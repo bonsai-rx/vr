@@ -12,12 +12,19 @@ namespace Bonsai.VR
     {
         public Matrix4 ControllerPose;
         public uint PacketNum;
-        public ulong ButtonPressed;
-        public ulong ButtonTouched;
-        public VRControllerAxis_t Axis0; //VRControllerAxis_t[5]
-        public VRControllerAxis_t Axis1;
-        public VRControllerAxis_t Axis2;
-        public VRControllerAxis_t Axis3;
-        public VRControllerAxis_t Axis4;
+        public VRControllerAxis_t Axis0; //For Vive: (x,y) = TouchPad x,y
+        public VRControllerAxis_t Axis1; //For Vive: x = Trigger position
+        public VRControllerAxis_t Axis2; //For vive not used
+        public VRControllerAxis_t Axis3; //For vive not used
+        public VRControllerAxis_t Axis4; //For vive not used
+
+        public ulong ButtonPressedId;
+        public ulong ButtonTouchedId;
+        public string ButtonPressedName;
+        public string ButtonTouchedName;
+
+        
+
+        
     }
 }
