@@ -92,10 +92,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\openvr\win64\openvr_api.dll">
+    <None Include="..\openvr\win64\openvr_api.dll">
       <Link>openvr_api.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -112,6 +112,7 @@
     <Error Condition="!Exists('..\packages\OpenCV.Net.3.3.0\build\net40\OpenCV.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCV.Net.3.3.0\build\net40\OpenCV.Net.targets'))" />
   </Target>
   <Import Project="..\packages\OpenCV.Net.3.3.0\build\net40\OpenCV.Net.targets" Condition="Exists('..\packages\OpenCV.Net.3.3.0\build\net40\OpenCV.Net.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
