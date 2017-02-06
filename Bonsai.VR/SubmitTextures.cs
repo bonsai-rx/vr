@@ -19,9 +19,6 @@ namespace Bonsai.VR
         [Editor("Bonsai.Shaders.Configuration.Design.TextureConfigurationEditor, Bonsai.Shaders.Design", typeof(UITypeEditor))]
         public string RightEyeTexture { get; set; }
 
-        [Editor("Bonsai.Shaders.Configuration.Design.ShaderConfigurationEditor, Bonsai.Shaders.Design", typeof(UITypeEditor))]
-        public string ShaderName { get; set; }
-
         public override IObservable<TSource> Process<TSource>(IObservable<TSource> source)
         {
             return Observable.Defer(() =>
@@ -41,11 +38,11 @@ namespace Bonsai.VR
                 }
 
                 return source.CombineEither(
-                    ShaderManager.ReserveShader(ShaderName).Do(shader =>
+                    ShaderManager.WindowSource.Do(window =>
                     {
-                        shader.Window.Update(() =>
+                        window.Update(() =>
                         {
-                            var tex = shader.Window.Textures[leftName];
+                            var tex = window.Textures[leftName];
                             if (tex == null)
                             {
                                 throw new InvalidOperationException(string.Format(
@@ -55,7 +52,7 @@ namespace Bonsai.VR
 
                             leftEyeTexture = tex.Id;
 
-                            tex = shader.Window.Textures[rightName];
+                            tex = window.Textures[rightName];
                             if (tex == null)
                             {
                                 throw new InvalidOperationException(string.Format(
@@ -66,19 +63,16 @@ namespace Bonsai.VR
                             rightEyeTexture = tex.Id;
                         });
                     }),
-                    (input, shader) =>
+                    (input, window) =>
                     {
-                        shader.Update(() =>
-                        {
-                            Texture_t leftEye, rightEye;
-                            leftEye.handle = (IntPtr)leftEyeTexture;
-                            rightEye.handle = (IntPtr)rightEyeTexture;
-                            leftEye.eColorSpace = rightEye.eColorSpace = EColorSpace.Auto;
-                            leftEye.eType = rightEye.eType = EGraphicsAPIConvention.API_OpenGL;
-                            OpenVR.Compositor.Submit(EVREye.Eye_Left, ref leftEye, IntPtr.Zero, EVRSubmitFlags.Submit_Default);
-                            OpenVR.Compositor.Submit(EVREye.Eye_Right, ref rightEye, IntPtr.Zero, EVRSubmitFlags.Submit_Default);
-                            OpenVR.Compositor.PostPresentHandoff();
-                        });
+                        Texture_t leftEye, rightEye;
+                        leftEye.handle = (IntPtr)leftEyeTexture;
+                        rightEye.handle = (IntPtr)rightEyeTexture;
+                        leftEye.eColorSpace = rightEye.eColorSpace = EColorSpace.Auto;
+                        leftEye.eType = rightEye.eType = EGraphicsAPIConvention.API_OpenGL;
+                        OpenVR.Compositor.Submit(EVREye.Eye_Left, ref leftEye, IntPtr.Zero, EVRSubmitFlags.Submit_Default);
+                        OpenVR.Compositor.Submit(EVREye.Eye_Right, ref rightEye, IntPtr.Zero, EVRSubmitFlags.Submit_Default);
+                        OpenVR.Compositor.PostPresentHandoff();
                         return input;
                     });
             });
