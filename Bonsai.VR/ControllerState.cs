@@ -22,9 +22,6 @@ namespace Bonsai.VR
         public ulong ButtonTouchedId;
         public string ButtonPressedName;
         public string ButtonTouchedName;
-
-        
-
-        
+        public bool IsValid;
     }
 }

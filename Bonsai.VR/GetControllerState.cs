@@ -59,7 +59,6 @@ namespace Bonsai.VR
                 return source.Select(input =>
                 {
                     var state = new VRControllerState_t();
-                    var poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
                     var compositor = OpenVR.Compositor;
                     //compositor.SetTrackingSpace(trackingSpace);
 
@@ -77,6 +76,7 @@ namespace Bonsai.VR
                     result_state.ButtonTouchedId = state.ulButtonTouched;
                     result_state.PacketNum = state.unPacketNum;
                     result_state.ControllerPose = input.RenderPoses[Index].DeviceToAbsolutePose;
+                    result_state.IsValid = input.RenderPoses[Index].IsValid;
 
                     foreach (string button in Enum.GetNames(typeof(Buttons)))
                     {
