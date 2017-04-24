@@ -1,15 +1,8 @@
-﻿using Bonsai;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
-
-// TODO: replace this with the transform input and output types.
-using TSource = System.String;
-using TResult = System.String;
 using Valve.VR;
-using OpenTK;
 
 namespace Bonsai.VR
 {
@@ -30,25 +23,22 @@ namespace Bonsai.VR
 
         static CVRSystem InitOpenVR()
         {
-            EVRInitError eError = EVRInitError.None;
-            var hmd = OpenVR.Init(ref eError, EVRApplicationType.VRApplication_Scene);
-
-            if (eError != EVRInitError.None)
+            var initError = EVRInitError.None;
+            var hmd = OpenVR.Init(ref initError, EVRApplicationType.VRApplication_Scene);
+            if (initError != EVRInitError.None)
             {
-                Console.WriteLine("OpenVR Initialization Error: {0}\n", OpenVR.GetStringForHmdError(eError));
-                return null;
+                throw new VRException(OpenVR.GetStringForHmdError(initError));
             }
 
-            ETrackedPropertyError peError = ETrackedPropertyError.TrackedProp_Success;
-            var driver = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_TrackingSystemName_String, ref peError);
-            var model = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_ModelNumber_String, ref peError);
-            var serial = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_SerialNumber_String, ref peError);
-            var freq = hmd.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_DisplayFrequency_Float, ref peError);
+            var propertyError = ETrackedPropertyError.TrackedProp_Success;
+            var driver = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_TrackingSystemName_String, ref propertyError);
+            var model = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_ModelNumber_String, ref propertyError);
+            var serial = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_SerialNumber_String, ref propertyError);
+            var freq = hmd.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_DisplayFrequency_Float, ref propertyError);
 
             //get the proper resolution of the hmd
             uint hmdWidth = 0, hmdHeight = 0;
             hmd.GetRecommendedRenderTargetSize(ref hmdWidth, ref hmdHeight);
-
             Console.WriteLine("HMD: {0} '{1}' #{2} ({3} x {4} @ {5} Hz)\n", driver, model, serial, hmdWidth, hmdHeight, freq);
 
             // Initialize the compositor
