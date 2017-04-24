@@ -7,11 +7,11 @@ namespace Bonsai.VR
     {
         public Matrix4 ControllerPose;
         public uint PacketNumber;
-        public VRControllerAxis_t Axis0; //For Vive: (x,y) = TouchPad x,y
-        public VRControllerAxis_t Axis1; //For Vive: x = Trigger position
-        public VRControllerAxis_t Axis2; //For vive not used
-        public VRControllerAxis_t Axis3; //For vive not used
-        public VRControllerAxis_t Axis4; //For vive not used
+        public Vector2 Axis0; //For Vive: (x,y) = TouchPad x,y
+        public Vector2 Axis1; //For Vive: x = Trigger position
+        public Vector2 Axis2; //For vive not used
+        public Vector2 Axis3; //For vive not used
+        public Vector2 Axis4; //For vive not used
         public ulong ButtonPressed;
         public ulong ButtonTouched;
         public bool IsValid;

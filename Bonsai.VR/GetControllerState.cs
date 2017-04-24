@@ -27,11 +27,11 @@ namespace Bonsai.VR
 
                     var valid = input.Hmd.GetControllerState(index, ref state);
                     var result = new ControllerState();
-                    result.Axis0 = state.rAxis0;
-                    result.Axis1 = state.rAxis1;
-                    result.Axis2 = state.rAxis2;
-                    result.Axis3 = state.rAxis3;
-                    result.Axis4 = state.rAxis4;
+                    DataHelper.ToVector2(ref state.rAxis0, out result.Axis0);
+                    DataHelper.ToVector2(ref state.rAxis1, out result.Axis1);
+                    DataHelper.ToVector2(ref state.rAxis2, out result.Axis2);
+                    DataHelper.ToVector2(ref state.rAxis3, out result.Axis3);
+                    DataHelper.ToVector2(ref state.rAxis4, out result.Axis4);
                     result.ButtonPressed = state.ulButtonPressed;
                     result.ButtonTouched = state.ulButtonTouched;
                     result.PacketNumber = state.unPacketNum;
