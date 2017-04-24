@@ -49,7 +49,6 @@ namespace Bonsai.VR
                 return source.Select(input =>
                 {
                     var state = new HmdState();
-                    var poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
                     state.HeadPose = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].DeviceToAbsolutePose;
                     GetEyePoses(input.Hmd, NearClip, FarClip, out leftEyeToHead, out rightEyeToHead, out state.LeftProjectionMatrix, out state.RightProjectionMatrix);
 
