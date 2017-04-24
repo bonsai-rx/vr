@@ -55,5 +55,11 @@ namespace Bonsai.VR
             result.Y = vector.v1;
             result.Z = vector.v2;
         }
+
+        public static void ToVector2(ref VRControllerAxis_t axis, out Vector2 result)
+        {
+            result.X = axis.x;
+            result.Y = axis.y;
+        }
     }
 }
