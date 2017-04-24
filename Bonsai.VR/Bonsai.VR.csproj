@@ -77,7 +77,6 @@
     <Compile Include="DevicePose.cs" />
     <Compile Include="GetControllerState.cs" />
     <Compile Include="GetDevicePoses.cs" />
-    <Compile Include="GetEyeTransformations.cs" />
     <Compile Include="GetHmdState.cs" />
     <Compile Include="HmdState.cs" />
     <Compile Include="ObjReader.cs" />
