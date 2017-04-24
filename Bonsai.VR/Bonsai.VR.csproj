@@ -79,7 +79,6 @@
     <Compile Include="GetDevicePoses.cs" />
     <Compile Include="GetHmdState.cs" />
     <Compile Include="HmdState.cs" />
-    <Compile Include="ObjReader.cs" />
     <Compile Include="ObservableCombinators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubmitTextures.cs" />
