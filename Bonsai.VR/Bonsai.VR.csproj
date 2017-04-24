@@ -75,6 +75,8 @@
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DevicePose.cs" />
+    <Compile Include="GetButtonPressed.cs" />
+    <Compile Include="GetButtonTouched.cs" />
     <Compile Include="GetControllerState.cs" />
     <Compile Include="GetDevicePoses.cs" />
     <Compile Include="GetHmdState.cs" />
