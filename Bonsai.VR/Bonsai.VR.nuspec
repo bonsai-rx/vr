@@ -17,5 +17,6 @@
   <files>
     <file src="..\openvr\win32\openvr_api.dll" target="build\native\bin\Win32"/>
     <file src="..\openvr\win64\openvr_api.dll" target="build\native\bin\x64"/>
+    <file src="..\openvr\LICENSE*" target="build\native\bin"/>
   </files>
 </package>
