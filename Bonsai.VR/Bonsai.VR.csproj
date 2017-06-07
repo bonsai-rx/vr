@@ -72,12 +72,14 @@
     <Compile Include="..\openvr\headers\openvr_api.cs">
       <Link>openvr_api.cs</Link>
     </Compile>
+    <Compile Include="TrackingReference.cs" />
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DevicePose.cs" />
     <Compile Include="DrawFramebuffer.cs" />
     <Compile Include="GetButtonPressed.cs" />
     <Compile Include="GetButtonTouched.cs" />
+    <Compile Include="GetTrackingReference.cs" />
     <Compile Include="GetControllerState.cs" />
     <Compile Include="GetDevicePoses.cs" />
     <Compile Include="GetHmdState.cs" />
