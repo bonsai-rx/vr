@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using Valve.VR;
 
 namespace Bonsai.VR
 {
+    [Description("Produces a sequence of events with the latest VR system state.")]
     public class GetDevicePoses : Combinator<VRDataFrame>
     {
         static string GetHmdString(CVRSystem pHmd, uint unDevice, ETrackedDeviceProperty prop, ref ETrackedPropertyError peError)

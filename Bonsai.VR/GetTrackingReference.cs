@@ -1,12 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using Valve.VR;
 
 namespace Bonsai.VR
 {
+    [Description("Extracts the specified tracking reference pose from the specified VR system data.")]
     public class GetTrackingReference : Transform<VRDataFrame, TrackingReference>
     {
+        [Description("The index of the tracking reference for which to extract the pose.")]
         public int Index { get; set; }
 
         public override IObservable<TrackingReference> Process(IObservable<VRDataFrame> source)
