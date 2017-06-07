@@ -7,6 +7,7 @@ using Valve.VR;
 
 namespace Bonsai.VR
 {
+    [Description("Submits the specified left and right eye textures to the headset for presentation.")]
     public class SubmitTextures : Sink<Tuple<Texture, Texture>>
     {
         public override IObservable<Tuple<Texture, Texture>> Process(IObservable<Tuple<Texture, Texture>> source)

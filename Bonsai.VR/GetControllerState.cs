@@ -1,14 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using Valve.VR;
 
 namespace Bonsai.VR
 {
+    [Description("Extracts the specified controller state from the specified VR system data.")]
     public class GetControllerState : Transform<VRDataFrame, ControllerState>
     {
+        [Description("The optional index of the controller for which to extract the state.")]
         public int? Index { get; set; }
 
+        [Description("The optional role of the controller for which to extract the state.")]
         public ETrackedControllerRole? ControllerRole { get; set; }
 
         public override IObservable<ControllerState> Process(IObservable<VRDataFrame> source)

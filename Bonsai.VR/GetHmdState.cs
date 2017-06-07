@@ -1,6 +1,7 @@
 ﻿using OpenTK;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using Valve.VR;
 
 namespace Bonsai.VR
 {
+    [Description("Extracts the head pose, eye view and projection matrices from the specified VR system data.")]
     public class GetHmdState : Transform<VRDataFrame, HmdState>
     {
         public GetHmdState()
@@ -17,8 +19,10 @@ namespace Bonsai.VR
             FarClip = 100f;
         }
 
+        [Description("The distance to the near clip plane.")]
         public float NearClip { get; set; }
 
+        [Description("The distance to the far clip plane.")]
         public float FarClip { get; set; }
 
         static void GetEyePoses(

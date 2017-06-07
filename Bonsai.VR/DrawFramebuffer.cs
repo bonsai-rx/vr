@@ -16,7 +16,7 @@ using Valve.VR;
 
 namespace Bonsai.VR
 {
-    [Description("Renders all currently stored draw commands to a framebuffer.")]
+    [Description("Renders all currently stored draw commands to a VR compatible framebuffer.")]
     public class DrawFramebuffer : Combinator<Texture>
     {
         readonly StateConfigurationCollection renderState = new StateConfigurationCollection();
