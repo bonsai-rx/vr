@@ -72,6 +72,8 @@
     <Compile Include="..\openvr\headers\openvr_api.cs">
       <Link>openvr_api.cs</Link>
     </Compile>
+    <Compile Include="GetDeviceState.cs" />
+    <Compile Include="DeviceState.cs" />
     <Compile Include="TrackingReference.cs" />
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="SubmitTextures.cs" />
     <Compile Include="VRDataFrame.cs" />
     <Compile Include="VRException.cs" />
+    <Compile Include="VRExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bonsai.VR.nuspec" />
