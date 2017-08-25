@@ -53,6 +53,7 @@ namespace Bonsai.VR
                 return source.Select(input =>
                 {
                     var state = new HmdState();
+                    state.IsValid = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].IsValid;
                     state.Velocity = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].Velocity;
                     state.AngularVelocity = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].AngularVelocity;
                     state.DevicePose = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].DeviceToAbsolutePose;
