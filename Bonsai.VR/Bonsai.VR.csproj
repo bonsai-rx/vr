@@ -74,7 +74,6 @@
     </Compile>
     <Compile Include="GetDeviceState.cs" />
     <Compile Include="DeviceState.cs" />
-    <Compile Include="TrackingReference.cs" />
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="TrackedDevicePose.cs" />
