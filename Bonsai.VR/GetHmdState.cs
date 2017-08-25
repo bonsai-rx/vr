@@ -53,11 +53,13 @@ namespace Bonsai.VR
                 return source.Select(input =>
                 {
                     var state = new HmdState();
-                    state.HeadPose = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].DeviceToAbsolutePose;
+                    state.Velocity = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].Velocity;
+                    state.AngularVelocity = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].AngularVelocity;
+                    state.DevicePose = input.RenderPoses[OpenVR.k_unTrackedDeviceIndex_Hmd].DeviceToAbsolutePose;
                     GetEyePoses(input.Hmd, NearClip, FarClip, out leftEyeToHead, out rightEyeToHead, out state.LeftProjectionMatrix, out state.RightProjectionMatrix);
 
-                    Matrix4.Mult(ref leftEyeToHead, ref state.HeadPose, out state.LeftViewMatrix);
-                    Matrix4.Mult(ref rightEyeToHead, ref state.HeadPose, out state.RightViewMatrix);
+                    Matrix4.Mult(ref leftEyeToHead, ref state.DevicePose, out state.LeftViewMatrix);
+                    Matrix4.Mult(ref rightEyeToHead, ref state.DevicePose, out state.RightViewMatrix);
                     state.LeftViewMatrix.Invert();
                     state.RightViewMatrix.Invert();
                     return state;

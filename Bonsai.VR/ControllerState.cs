@@ -5,7 +5,9 @@ namespace Bonsai.VR
 {
     public class ControllerState
     {
-        public Matrix4 ControllerPose;
+        public Vector3 Velocity;
+        public Vector3 AngularVelocity;
+        public Matrix4 DevicePose;
         public uint PacketNumber;
         public Vector2 Axis0; //For Vive: (x,y) = TouchPad x,y
         public Vector2 Axis1; //For Vive: x = Trigger position

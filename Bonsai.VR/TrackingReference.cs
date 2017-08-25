@@ -9,7 +9,9 @@ namespace Bonsai.VR
 {
     public class TrackingReference
     {
-        public Matrix4 ReferencePose;
+        public Vector3 Velocity;
+        public Vector3 AngularVelocity;
+        public Matrix4 DevicePose;
         public bool IsValid;
     }
 }

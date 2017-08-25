@@ -3,7 +3,7 @@ using Valve.VR;
 
 namespace Bonsai.VR
 {
-    public struct DevicePose
+    public struct TrackedDevicePose
     {
         public Vector3 Velocity;
         public Vector3 AngularVelocity;

@@ -41,7 +41,9 @@ namespace Bonsai.VR
                         result.ButtonPressed = state.ulButtonPressed;
                         result.ButtonTouched = state.ulButtonTouched;
                         result.PacketNumber = state.unPacketNum;
-                        result.ControllerPose = input.RenderPoses[index].DeviceToAbsolutePose;
+                        result.Velocity = input.RenderPoses[index].Velocity;
+                        result.AngularVelocity = input.RenderPoses[index].AngularVelocity;
+                        result.DevicePose = input.RenderPoses[index].DeviceToAbsolutePose;
                         result.IsValid = valid && input.RenderPoses[index].IsValid;
                     }
                     return result;

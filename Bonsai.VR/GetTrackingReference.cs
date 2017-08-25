@@ -25,7 +25,9 @@ namespace Bonsai.VR
                     if (index >= 0 && index < count)
                     {
                         var deviceIndex = deviceIndices[index];
-                        result.ReferencePose = input.RenderPoses[deviceIndex].DeviceToAbsolutePose;
+                        result.Velocity = input.RenderPoses[deviceIndex].Velocity;
+                        result.AngularVelocity = input.RenderPoses[deviceIndex].AngularVelocity;
+                        result.DevicePose = input.RenderPoses[deviceIndex].DeviceToAbsolutePose;
                         result.IsValid = input.RenderPoses[deviceIndex].IsValid;
                     }
                     return result;
