@@ -9,7 +9,9 @@ namespace Bonsai.VR
 {
     public class HmdState
     {
-        public Matrix4 HeadPose;
+        public Vector3 Velocity;
+        public Vector3 AngularVelocity;
+        public Matrix4 DevicePose;
         public Matrix4 LeftViewMatrix;
         public Matrix4 LeftProjectionMatrix;
         public Matrix4 RightViewMatrix;

@@ -75,7 +75,7 @@
     <Compile Include="TrackingReference.cs" />
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />
-    <Compile Include="DevicePose.cs" />
+    <Compile Include="TrackedDevicePose.cs" />
     <Compile Include="DrawFramebuffer.cs" />
     <Compile Include="GetButtonPressed.cs" />
     <Compile Include="GetButtonTouched.cs" />

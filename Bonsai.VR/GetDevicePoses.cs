@@ -65,7 +65,7 @@ namespace Bonsai.VR
                     var poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
                     OpenVR.Compositor.WaitGetPoses(poses, null);
 
-                    var renderPoses = new DevicePose[poses.Length];
+                    var renderPoses = new TrackedDevicePose[poses.Length];
                     for (int i = 0; i < renderPoses.Length; i++)
                     {
                         DataHelper.ToVector3(ref poses[i].vVelocity, out renderPoses[i].Velocity);

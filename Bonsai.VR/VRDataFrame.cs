@@ -9,7 +9,7 @@ namespace Bonsai.VR
 {
     public class VRDataFrame
     {
-        public VRDataFrame(CVRSystem hmd, DevicePose[] renderPoses)
+        public VRDataFrame(CVRSystem hmd, TrackedDevicePose[] renderPoses)
         {
             Hmd = hmd;
             RenderPoses = renderPoses;
@@ -17,6 +17,6 @@ namespace Bonsai.VR
 
         public CVRSystem Hmd { get; private set; }
 
-        public DevicePose[] RenderPoses { get; private set; }
+        public TrackedDevicePose[] RenderPoses { get; private set; }
     }
 }
