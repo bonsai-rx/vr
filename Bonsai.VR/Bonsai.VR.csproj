@@ -72,7 +72,7 @@
     <Compile Include="..\openvr\headers\openvr_api.cs">
       <Link>openvr_api.cs</Link>
     </Compile>
-    <Compile Include="GetDeviceState.cs" />
+    <Compile Include="GetTrackerState.cs" />
     <Compile Include="DeviceState.cs" />
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />

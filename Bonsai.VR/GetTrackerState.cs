@@ -8,7 +8,7 @@ using Valve.VR;
 namespace Bonsai.VR
 {
     [Description("Extracts the specified tracked device state from the specified VR system data.")]
-    public class GetDeviceState : Transform<VRDataFrame, DeviceState>
+    public class GetTrackerState : Transform<VRDataFrame, DeviceState>
     {
         [TypeConverter(typeof(SerialNumberConverter))]
         [Description("The serial number of the device for which to extract the state.")]
