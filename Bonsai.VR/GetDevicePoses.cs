@@ -10,6 +10,13 @@ namespace Bonsai.VR
     [Description("Produces a sequence of events with the latest VR system state.")]
     public class GetDevicePoses : Combinator<VRDataFrame>
     {
+        public GetDevicePoses()
+        {
+            ApplicationType = EVRApplicationType.VRApplication_Scene;
+        }
+
+        public EVRApplicationType ApplicationType { get; set; }
+
         static string GetHmdString(CVRSystem pHmd, uint unDevice, ETrackedDeviceProperty prop, ref ETrackedPropertyError peError)
         {
             var unRequiredBufferLen = pHmd.GetStringTrackedDeviceProperty(unDevice, prop, null, 0, ref peError);
@@ -23,32 +30,35 @@ namespace Bonsai.VR
             return pchBuffer.ToString();
         }
 
-        static CVRSystem InitOpenVR()
+        static CVRSystem InitOpenVR(EVRApplicationType applicationType)
         {
             var initError = EVRInitError.None;
-            var hmd = OpenVR.Init(ref initError, EVRApplicationType.VRApplication_Scene);
+            var hmd = OpenVR.Init(ref initError, applicationType);
             if (initError != EVRInitError.None)
             {
                 throw new VRException(OpenVR.GetStringForHmdError(initError));
             }
 
-            var propertyError = ETrackedPropertyError.TrackedProp_Success;
-            var driver = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_TrackingSystemName_String, ref propertyError);
-            var model = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_ModelNumber_String, ref propertyError);
-            var serial = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_SerialNumber_String, ref propertyError);
-            var freq = hmd.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_DisplayFrequency_Float, ref propertyError);
-
-            //get the proper resolution of the hmd
-            uint hmdWidth = 0, hmdHeight = 0;
-            hmd.GetRecommendedRenderTargetSize(ref hmdWidth, ref hmdHeight);
-            Console.WriteLine("HMD: {0} '{1}' #{2} ({3} x {4} @ {5} Hz)\n", driver, model, serial, hmdWidth, hmdHeight, freq);
-
-            // Initialize the compositor
-            var compositor = OpenVR.Compositor;
-            if (compositor == null)
+            if (applicationType == EVRApplicationType.VRApplication_Scene)
             {
-                Console.WriteLine("OpenVR Compositor initialization failed. See log file for details\n");
-                OpenVR.Shutdown();
+                var propertyError = ETrackedPropertyError.TrackedProp_Success;
+                var driver = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_TrackingSystemName_String, ref propertyError);
+                var model = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_ModelNumber_String, ref propertyError);
+                var serial = GetHmdString(hmd, OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_SerialNumber_String, ref propertyError);
+                var freq = hmd.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_DisplayFrequency_Float, ref propertyError);
+
+                //get the proper resolution of the hmd
+                uint hmdWidth = 0, hmdHeight = 0;
+                hmd.GetRecommendedRenderTargetSize(ref hmdWidth, ref hmdHeight);
+                Console.WriteLine("HMD: {0} '{1}' #{2} ({3} x {4} @ {5} Hz)\n", driver, model, serial, hmdWidth, hmdHeight, freq);
+
+                // Initialize the compositor
+                var compositor = OpenVR.Compositor;
+                if (compositor == null)
+                {
+                    Console.WriteLine("OpenVR Compositor initialization failed. See log file for details\n");
+                    OpenVR.Shutdown();
+                }
             }
 
             return hmd;
@@ -58,12 +68,14 @@ namespace Bonsai.VR
         {
             return Observable.Defer(() =>
             {
-                var hmd = InitOpenVR();
+                var applicationType = ApplicationType;
+                var hmd = InitOpenVR(applicationType);
 
                 return source.Select(input =>
                 {
                     var poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
-                    OpenVR.Compositor.WaitGetPoses(poses, null);
+                    if (applicationType == EVRApplicationType.VRApplication_Scene) OpenVR.Compositor.WaitGetPoses(poses, null);
+                    else hmd.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0, poses);
 
                     var renderPoses = new TrackedDevicePose[poses.Length];
                     for (int i = 0; i < renderPoses.Length; i++)
