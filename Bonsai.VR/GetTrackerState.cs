@@ -72,7 +72,7 @@ namespace Bonsai.VR
                     var count = system.GetSortedTrackedDeviceIndicesOfClass(ETrackedDeviceClass.GenericTracker, devices, 0);
                     for (uint i = 0; i < count; i++)
                     {
-                        var serial = system.GetStringTrackedDeviceProperty(i, ETrackedDeviceProperty.Prop_SerialNumber_String);
+                        var serial = system.GetStringTrackedDeviceProperty(devices[i], ETrackedDeviceProperty.Prop_SerialNumber_String);
                         serialNumbers.Add(serial);
                     }
 
