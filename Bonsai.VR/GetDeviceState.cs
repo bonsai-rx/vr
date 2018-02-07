@@ -21,7 +21,8 @@ namespace Bonsai.VR
                 var result = new DeviceState();
                 for (uint i = 0; i < input.RenderPoses.Length; i++)
                 {
-                    if (serial == input.Hmd.GetStringTrackedDeviceProperty(i, ETrackedDeviceProperty.Prop_SerialNumber_String))
+                    if (input.RenderPoses[i].IsDeviceConnected &&
+                        serial == input.Hmd.GetStringTrackedDeviceProperty(i, ETrackedDeviceProperty.Prop_SerialNumber_String))
                     {
                         index = (int)i;
                         break;
