@@ -12,8 +12,8 @@ namespace Bonsai.VR
         public static string GetStringTrackedDeviceProperty(this CVRSystem hmd, uint unDeviceIndex, ETrackedDeviceProperty prop)
         {
             var error = ETrackedPropertyError.TrackedProp_Success;
-            var builder = new StringBuilder((int)OpenVR.k_unTrackingStringSize);
-            var result = hmd.GetStringTrackedDeviceProperty(unDeviceIndex, prop, builder, (int)OpenVR.k_unTrackingStringSize, ref error);
+            var builder = new StringBuilder((int)OpenVR.k_unMaxPropertyStringSize);
+            var result = hmd.GetStringTrackedDeviceProperty(unDeviceIndex, prop, builder, OpenVR.k_unMaxPropertyStringSize, ref error);
             if (error != ETrackedPropertyError.TrackedProp_Success)
             {
                 throw new VRException(hmd.GetPropErrorNameFromEnum(error));
