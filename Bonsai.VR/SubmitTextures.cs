@@ -18,7 +18,7 @@ namespace Bonsai.VR
                 leftEye.handle = (IntPtr)input.Item1.Id;
                 rightEye.handle = (IntPtr)input.Item2.Id;
                 leftEye.eColorSpace = rightEye.eColorSpace = EColorSpace.Auto;
-                leftEye.eType = rightEye.eType = EGraphicsAPIConvention.API_OpenGL;
+                leftEye.eType = rightEye.eType = ETextureType.OpenGL;
                 OpenVR.Compositor.Submit(EVREye.Eye_Left, ref leftEye, IntPtr.Zero, EVRSubmitFlags.Submit_Default);
                 OpenVR.Compositor.Submit(EVREye.Eye_Right, ref rightEye, IntPtr.Zero, EVRSubmitFlags.Submit_Default);
                 OpenVR.Compositor.PostPresentHandoff();

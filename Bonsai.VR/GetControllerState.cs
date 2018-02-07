@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices;
 using Valve.VR;
 
 namespace Bonsai.VR
@@ -20,6 +21,7 @@ namespace Bonsai.VR
             return Observable.Defer(() =>
             {
                 var state = new VRControllerState_t();
+                var stateSize = (uint)Marshal.SizeOf(typeof(VRControllerState_t));
                 return source.Select(input =>
                 {
                     var result = new ControllerState();
@@ -32,7 +34,7 @@ namespace Bonsai.VR
 
                     if (index >= 0)
                     {
-                        var valid = input.Hmd.GetControllerState((uint)index, ref state);
+                        var valid = input.Hmd.GetControllerState((uint)index, ref state, stateSize);
                         DataHelper.ToVector2(ref state.rAxis0, out result.Axis0);
                         DataHelper.ToVector2(ref state.rAxis1, out result.Axis1);
                         DataHelper.ToVector2(ref state.rAxis2, out result.Axis2);

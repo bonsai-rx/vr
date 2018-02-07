@@ -39,8 +39,8 @@ namespace Bonsai.VR
             DataHelper.ToMatrix4(ref ltMatrix, out ltEyeToHead);
             DataHelper.ToMatrix4(ref rtMatrix, out rtEyeToHead);
 
-            var ltProj = hmd.GetProjectionMatrix(EVREye.Eye_Left, nearPlaneZ, farPlaneZ, EGraphicsAPIConvention.API_OpenGL);
-            var rtProj = hmd.GetProjectionMatrix(EVREye.Eye_Right, nearPlaneZ, farPlaneZ, EGraphicsAPIConvention.API_OpenGL);
+            var ltProj = hmd.GetProjectionMatrix(EVREye.Eye_Left, nearPlaneZ, farPlaneZ);
+            var rtProj = hmd.GetProjectionMatrix(EVREye.Eye_Right, nearPlaneZ, farPlaneZ);
             DataHelper.ToMatrix4(ref ltProj, out ltProjectionMatrix);
             DataHelper.ToMatrix4(ref rtProj, out rtProjectionMatrix);
         }
