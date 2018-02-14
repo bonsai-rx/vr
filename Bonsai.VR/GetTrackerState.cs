@@ -45,6 +45,7 @@ namespace Bonsai.VR
                         result.AngularVelocity = input.RenderPoses[index].AngularVelocity;
                         result.DevicePose = input.RenderPoses[index].DeviceToAbsolutePose;
                         result.IsValid = valid && input.RenderPoses[index].IsValid;
+                        result.DeviceIndex = index;
                     }
                     return result;
                 });
