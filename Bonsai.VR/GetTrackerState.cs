@@ -3,43 +3,51 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices;
 using Valve.VR;
 
 namespace Bonsai.VR
 {
     [Description("Extracts the specified tracked device state from the specified VR system data.")]
-    public class GetTrackerState : Transform<VRDataFrame, DeviceState>
+    public class GetTrackerState : Transform<VRDataFrame, TrackerState>
     {
         [TypeConverter(typeof(SerialNumberConverter))]
         [Description("The serial number of the device for which to extract the state.")]
         public string SerialNumber { get; set; }
 
-        public override IObservable<DeviceState> Process(IObservable<VRDataFrame> source)
+        public override IObservable<TrackerState> Process(IObservable<VRDataFrame> source)
         {
-            return source.Select(input =>
+            return Observable.Defer(() =>
             {
-                var index = -1;
-                var serial = SerialNumber;
-                var result = new DeviceState();
-                for (uint i = 0; i < input.RenderPoses.Length; i++)
+                var state = new VRControllerState_t();
+                var stateSize = (uint)Marshal.SizeOf(typeof(VRControllerState_t));
+                return source.Select(input =>
                 {
-                    if (input.RenderPoses[i].IsDeviceConnected &&
-                        serial == input.Hmd.GetStringTrackedDeviceProperty(i, ETrackedDeviceProperty.Prop_SerialNumber_String))
+                    var index = -1;
+                    var serial = SerialNumber;
+                    var result = new TrackerState();
+                    for (uint i = 0; i < input.RenderPoses.Length; i++)
                     {
-                        index = (int)i;
-                        break;
+                        if (input.RenderPoses[i].IsDeviceConnected &&
+                            serial == input.Hmd.GetStringTrackedDeviceProperty(i, ETrackedDeviceProperty.Prop_SerialNumber_String))
+                        {
+                            index = (int)i;
+                            break;
+                        }
                     }
-                }
 
-                if (index >= 0 && index < input.RenderPoses.Length)
-                {
-                    var deviceIndex = index;
-                    result.Velocity = input.RenderPoses[deviceIndex].Velocity;
-                    result.AngularVelocity = input.RenderPoses[deviceIndex].AngularVelocity;
-                    result.DevicePose = input.RenderPoses[deviceIndex].DeviceToAbsolutePose;
-                    result.IsValid = input.RenderPoses[deviceIndex].IsValid;
-                }
-                return result;
+                    if (index >= 0 && index < input.RenderPoses.Length)
+                    {
+                        var valid = input.Hmd.GetControllerState((uint)index, ref state, stateSize);
+                        result.ButtonPressed = state.ulButtonPressed;
+                        result.PacketNumber = state.unPacketNum;
+                        result.Velocity = input.RenderPoses[index].Velocity;
+                        result.AngularVelocity = input.RenderPoses[index].AngularVelocity;
+                        result.DevicePose = input.RenderPoses[index].DeviceToAbsolutePose;
+                        result.IsValid = valid && input.RenderPoses[index].IsValid;
+                    }
+                    return result;
+                });
             });
         }
 
