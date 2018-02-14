@@ -88,6 +88,7 @@
     <Compile Include="ObservableCombinators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubmitTextures.cs" />
+    <Compile Include="TrackerState.cs" />
     <Compile Include="VRDataFrame.cs" />
     <Compile Include="VRException.cs" />
     <Compile Include="VRExtensions.cs" />

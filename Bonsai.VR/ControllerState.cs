@@ -3,21 +3,14 @@ using Valve.VR;
 
 namespace Bonsai.VR
 {
-    public class ControllerState : DeviceState
+    public class ControllerState : TrackerState
     {
-        public uint PacketNumber;
         public Vector2 Axis0; //For Vive: (x,y) = TouchPad x,y
         public Vector2 Axis1; //For Vive: x = Trigger position
         public Vector2 Axis2; //For vive not used
         public Vector2 Axis3; //For vive not used
         public Vector2 Axis4; //For vive not used
-        public ulong ButtonPressed;
         public ulong ButtonTouched;
-
-        public bool GetButtonPressed(VRButtonId button)
-        {
-            return (ButtonPressed & (1ul << (int)button)) != 0;
-        }
 
         public bool GetButtonTouched(VRButtonId button)
         {
