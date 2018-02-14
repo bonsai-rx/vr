@@ -29,12 +29,12 @@ namespace Bonsai.VR
                     var role = ControllerRole.GetValueOrDefault();
                     if (role != ETrackedControllerRole.Invalid)
                     {
-                        index = (int)input.Hmd.GetTrackedDeviceIndexForControllerRole(role);
+                        index = (int)input.System.GetTrackedDeviceIndexForControllerRole(role);
                     }
 
                     if (index >= 0)
                     {
-                        var valid = input.Hmd.GetControllerState((uint)index, ref state, stateSize);
+                        var valid = input.System.GetControllerState((uint)index, ref state, stateSize);
                         DataHelper.ToVector2(ref state.rAxis0, out result.Axis0);
                         DataHelper.ToVector2(ref state.rAxis1, out result.Axis1);
                         DataHelper.ToVector2(ref state.rAxis2, out result.Axis2);
