@@ -9,6 +9,7 @@ namespace Bonsai.VR
 {
     public class DeviceState
     {
+        public int DeviceIndex;
         public Vector3 Velocity;
         public Vector3 AngularVelocity;
         public Matrix4 DevicePose;

@@ -24,11 +24,12 @@ namespace Bonsai.VR
                     var count = (int)input.System.GetSortedTrackedDeviceIndicesOfClass(ETrackedDeviceClass.TrackingReference, deviceIndices, OpenVR.k_unTrackedDeviceIndex_Hmd);
                     if (index >= 0 && index < count)
                     {
-                        var deviceIndex = deviceIndices[index];
+                        var deviceIndex = (int)deviceIndices[index];
                         result.Velocity = input.RenderPoses[deviceIndex].Velocity;
                         result.AngularVelocity = input.RenderPoses[deviceIndex].AngularVelocity;
                         result.DevicePose = input.RenderPoses[deviceIndex].DeviceToAbsolutePose;
                         result.IsValid = input.RenderPoses[deviceIndex].IsValid;
+                        result.DeviceIndex = index;
                     }
                     return result;
                 });
