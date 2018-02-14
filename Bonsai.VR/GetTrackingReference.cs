@@ -21,7 +21,7 @@ namespace Bonsai.VR
                 {
                     var index = Index;
                     var result = new DeviceState();
-                    var count = (int)input.Hmd.GetSortedTrackedDeviceIndicesOfClass(ETrackedDeviceClass.TrackingReference, deviceIndices, OpenVR.k_unTrackedDeviceIndex_Hmd);
+                    var count = (int)input.System.GetSortedTrackedDeviceIndicesOfClass(ETrackedDeviceClass.TrackingReference, deviceIndices, OpenVR.k_unTrackedDeviceIndex_Hmd);
                     if (index >= 0 && index < count)
                     {
                         var deviceIndex = deviceIndices[index];

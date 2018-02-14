@@ -29,7 +29,7 @@ namespace Bonsai.VR
                     for (uint i = 0; i < input.RenderPoses.Length; i++)
                     {
                         if (input.RenderPoses[i].IsDeviceConnected &&
-                            serial == input.Hmd.GetStringTrackedDeviceProperty(i, ETrackedDeviceProperty.Prop_SerialNumber_String))
+                            serial == input.System.GetStringTrackedDeviceProperty(i, ETrackedDeviceProperty.Prop_SerialNumber_String))
                         {
                             index = (int)i;
                             break;
@@ -38,7 +38,7 @@ namespace Bonsai.VR
 
                     if (index >= 0 && index < input.RenderPoses.Length)
                     {
-                        var valid = input.Hmd.GetControllerState((uint)index, ref state, stateSize);
+                        var valid = input.System.GetControllerState((uint)index, ref state, stateSize);
                         result.ButtonPressed = state.ulButtonPressed;
                         result.PacketNumber = state.unPacketNum;
                         result.Velocity = input.RenderPoses[index].Velocity;
