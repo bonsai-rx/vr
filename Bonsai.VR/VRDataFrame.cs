@@ -9,14 +9,20 @@ namespace Bonsai.VR
 {
     public class VRDataFrame
     {
-        public VRDataFrame(CVRSystem system, TrackedDevicePose[] renderPoses)
+        public VRDataFrame(CVRSystem system, TrackedDevicePose[] renderPoses, float secondsSinceLastVsync, ulong frameCounter)
         {
             System = system;
             RenderPoses = renderPoses;
+            SecondsSinceLastVsync = secondsSinceLastVsync;
+            FrameCounter = frameCounter;
         }
 
         public CVRSystem System { get; private set; }
 
         public TrackedDevicePose[] RenderPoses { get; private set; }
+
+        public float SecondsSinceLastVsync { get; private set; }
+
+        public ulong FrameCounter { get; private set; }
     }
 }
