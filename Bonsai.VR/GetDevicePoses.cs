@@ -64,6 +64,23 @@ namespace Bonsai.VR
             return system;
         }
 
+        static TrackedDevicePose[] GetConvertedPoses(TrackedDevicePose_t[] trackedPoses)
+        {
+            var result = new TrackedDevicePose[trackedPoses.Length];
+            for (int i = 0; i < trackedPoses.Length; i++)
+            {
+                if (!trackedPoses[i].bPoseIsValid) continue;
+                DataHelper.ToVector3(ref trackedPoses[i].vVelocity, out result[i].Velocity);
+                DataHelper.ToVector3(ref trackedPoses[i].vAngularVelocity, out result[i].AngularVelocity);
+                DataHelper.ToMatrix4(ref trackedPoses[i].mDeviceToAbsoluteTracking, out result[i].DeviceToAbsolutePose);
+                result[i].IsDeviceConnected = trackedPoses[i].bDeviceIsConnected;
+                result[i].TrackingResult = trackedPoses[i].eTrackingResult;
+                result[i].IsValid = trackedPoses[i].bPoseIsValid;
+            }
+
+            return result;
+        }
+
         public override IObservable<VRDataFrame> Process<TSource>(IObservable<TSource> source)
         {
             return Observable.Defer(() =>
@@ -72,26 +89,18 @@ namespace Bonsai.VR
                 var secondsSinceLastVsync = 0f;
                 var applicationType = ApplicationType;
                 var system = InitOpenVR(applicationType);
+                var trackedRenderPoses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
+                var trackedAbsolutePoses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
 
                 return source.Select(input =>
                 {
-                    var poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
-                    if (applicationType == EVRApplicationType.VRApplication_Scene) OpenVR.Compositor.WaitGetPoses(poses, null);
-                    else system.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0, poses);
+                    if (applicationType == EVRApplicationType.VRApplication_Scene) OpenVR.Compositor.WaitGetPoses(trackedRenderPoses, trackedAbsolutePoses);
+                    else system.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0, trackedAbsolutePoses);
                     system.GetTimeSinceLastVsync(ref secondsSinceLastVsync, ref frameCounter);
 
-                    var renderPoses = new TrackedDevicePose[poses.Length];
-                    for (int i = 0; i < renderPoses.Length; i++)
-                    {
-                        DataHelper.ToVector3(ref poses[i].vVelocity, out renderPoses[i].Velocity);
-                        DataHelper.ToVector3(ref poses[i].vAngularVelocity, out renderPoses[i].AngularVelocity);
-                        DataHelper.ToMatrix4(ref poses[i].mDeviceToAbsoluteTracking, out renderPoses[i].DeviceToAbsolutePose);
-                        renderPoses[i].IsDeviceConnected = poses[i].bDeviceIsConnected;
-                        renderPoses[i].TrackingResult = poses[i].eTrackingResult;
-                        renderPoses[i].IsValid = poses[i].bPoseIsValid;
-                    }
-
-                    return new VRDataFrame(system, renderPoses, secondsSinceLastVsync, frameCounter);
+                    var renderPoses = GetConvertedPoses(trackedRenderPoses);
+                    var absolutePoses = GetConvertedPoses(trackedAbsolutePoses);
+                    return new VRDataFrame(system, renderPoses, absolutePoses, secondsSinceLastVsync, frameCounter);
                 }).Finally(() =>
                 {
                     OpenVR.Shutdown();
