@@ -68,6 +68,8 @@ namespace Bonsai.VR
         {
             return Observable.Defer(() =>
             {
+                var frameCounter = 0ul;
+                var secondsSinceLastVsync = 0f;
                 var applicationType = ApplicationType;
                 var system = InitOpenVR(applicationType);
 
@@ -76,6 +78,7 @@ namespace Bonsai.VR
                     var poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
                     if (applicationType == EVRApplicationType.VRApplication_Scene) OpenVR.Compositor.WaitGetPoses(poses, null);
                     else system.GetDeviceToAbsoluteTrackingPose(ETrackingUniverseOrigin.TrackingUniverseStanding, 0, poses);
+                    system.GetTimeSinceLastVsync(ref secondsSinceLastVsync, ref frameCounter);
 
                     var renderPoses = new TrackedDevicePose[poses.Length];
                     for (int i = 0; i < renderPoses.Length; i++)
@@ -88,7 +91,7 @@ namespace Bonsai.VR
                         renderPoses[i].IsValid = poses[i].bPoseIsValid;
                     }
 
-                    return new VRDataFrame(system, renderPoses);
+                    return new VRDataFrame(system, renderPoses, secondsSinceLastVsync, frameCounter);
                 }).Finally(() =>
                 {
                     OpenVR.Shutdown();
