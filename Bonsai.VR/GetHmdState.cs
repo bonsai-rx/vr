@@ -62,8 +62,11 @@ namespace Bonsai.VR
 
                     Matrix4.Mult(ref leftEyeToHead, ref state.DevicePose, out state.LeftViewMatrix);
                     Matrix4.Mult(ref rightEyeToHead, ref state.DevicePose, out state.RightViewMatrix);
-                    state.LeftViewMatrix.Invert();
-                    state.RightViewMatrix.Invert();
+                    if (state.LeftViewMatrix.Determinant != 0)
+                    {
+                        state.LeftViewMatrix.Invert();
+                        state.RightViewMatrix.Invert();
+                    }
                     return state;
                 });
             });
