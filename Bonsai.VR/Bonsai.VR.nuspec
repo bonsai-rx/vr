@@ -6,12 +6,12 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://bitbucket.org/horizongir/bonsai.vr/raw/712fb99a5c04da514c38263acf4b765fc0a05609/LICENSE</licenseUrl>
+    <licenseUrl>https://bonsai-rx.org/license</licenseUrl>
     <projectUrl>https://bitbucket.org/horizongir/bonsai.vr</projectUrl>
-    <iconUrl>https://bitbucket.org/horizongir/bonsai/raw/7aacc64dc4647e57362ab310238591dc197fef0d/Resources/Bonsai.png</iconUrl>
+    <iconUrl>https://bonsai-rx.org/assets/images/bonsai.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>$author$ © 2016</copyright>
+    <copyright>$author$ © 2019</copyright>
     <tags>Bonsai VR</tags>
   </metadata>
   <files>
