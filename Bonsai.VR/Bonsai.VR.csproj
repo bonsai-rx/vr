@@ -80,6 +80,8 @@
     <Compile Include="DeviceState.cs" />
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />
+    <Compile Include="GetVideoStreamFrameBuffer.cs" />
+    <Compile Include="TrackedCameraFrame.cs" />
     <Compile Include="TrackedCameraState.cs" />
     <Compile Include="TrackedDevicePose.cs" />
     <Compile Include="DrawFramebuffer.cs" />

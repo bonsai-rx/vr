@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Valve.VR;
@@ -36,7 +35,6 @@ namespace Bonsai.VR
             {
                 ulong handle = 0;
                 var deviceIndex = (uint)DeviceIndex;
-                var headerSize = (uint)Marshal.SizeOf(typeof(CameraVideoStreamFrameHeader_t));
                 var header = new CameraVideoStreamFrameHeader_t();
                 EVRTrackedCameraError error;
 
@@ -54,20 +52,12 @@ namespace Bonsai.VR
                         frameType,
                         IntPtr.Zero, 0,
                         ref header,
-                        headerSize);
+                        TrackedCameraState.HeaderSize);
                     ThrowExceptionForErrorCode(error);
 
                     var result = new TrackedCameraState();
                     result.DeviceIndex = (int)deviceIndex;
-                    result.IsValid = header.trackedDevicePose.bPoseIsValid;
-                    DataHelper.ToVector3(ref header.trackedDevicePose.vVelocity, out result.Velocity);
-                    DataHelper.ToVector3(ref header.trackedDevicePose.vAngularVelocity, out result.AngularVelocity);
-                    DataHelper.ToMatrix4(ref header.trackedDevicePose.mDeviceToAbsoluteTracking, out result.DevicePose);
-                    result.Width = header.nWidth;
-                    result.Height = header.nHeight;
-                    result.BytesPerPixel = header.nBytesPerPixel;
-                    result.FrameSequence = header.nFrameSequence;
-                    result.FrameExposureTime = header.ulFrameExposureTime;
+                    result.UpdateFrameHeader(ref header);
                     result.FrameType = frameType;
                     result.Handle = handle;
                     return result;
