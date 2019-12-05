@@ -65,7 +65,8 @@ namespace Bonsai.VR
                 {
                     if (handle != 0)
                     {
-                        OpenVR.TrackedCamera.ReleaseVideoStreamingService(handle);
+                        error = OpenVR.TrackedCamera.ReleaseVideoStreamingService(handle);
+                        ThrowExceptionForErrorCode(error);
                     }
                 });
             });
