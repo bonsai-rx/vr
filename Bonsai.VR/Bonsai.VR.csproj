@@ -80,6 +80,7 @@
     <Compile Include="DeviceState.cs" />
     <Compile Include="ControllerState.cs" />
     <Compile Include="DataHelper.cs" />
+    <Compile Include="TrackedCameraState.cs" />
     <Compile Include="TrackedDevicePose.cs" />
     <Compile Include="DrawFramebuffer.cs" />
     <Compile Include="GetButtonPressed.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="SubmitTextures.cs" />
     <Compile Include="TrackerState.cs" />
     <Compile Include="TriggerHapticPulse.cs" />
+    <Compile Include="GetTrackedCameraState.cs" />
     <Compile Include="VRDataFrame.cs" />
     <Compile Include="VRException.cs" />
     <Compile Include="VRExtensions.cs" />
