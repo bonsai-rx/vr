@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Bonsai - VR Library</Title>
+    <Description>Bonsai VR Library containing modules for interfacing with VR headsets.</Description>
+    <TargetFrameworks>net472</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Externals\openvr\headers\openvr_api.cs" Link="openvr_api.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Externals\openvr\win32\openvr_api.dll" PackagePath="build\native\bin\Win32"/>
+    <Content Include="..\Externals\openvr\win64\openvr_api.dll" PackagePath="build\native\bin\x64"/>
+    <Content Include="..\Externals\openvr\LICENSE*" PackagePath="build\native\bin"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bonsai.System" Version="2.9.0" />
+    <PackageReference Include="Bonsai.Shaders" Version="2.9.0" />
+  </ItemGroup>
+
+</Project>
